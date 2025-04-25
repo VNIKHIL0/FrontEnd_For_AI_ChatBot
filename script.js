@@ -22,7 +22,7 @@ async function sendMessage() {
   chat.scrollTop = chat.scrollHeight;
 
   try {
-    const res = await fetch('https://ai-chatbot-7k3a.onrender.com', {
+    const res = await fetch('https://ai-chatbot-7k3a.onrender.com/chat', {  // <-- Updated endpoint
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ message })
