@@ -17,26 +17,28 @@ async function sendMessage() {
   input.value = '';
 
   const loader = document.createElement('div');
-  loader.className = 'message bot-message loader';
+  loader.className = 'message bot-message';
+  loader.textContent = 'Typing...';
   chat.appendChild(loader);
   chat.scrollTop = chat.scrollHeight;
 
   try {
-    const res = await fetch('https://ai-chatbot-7k3a.onrender.com/chat', {  // <-- Updated endpoint
+    const res = await fetch('https://ai-chatbot-7k3a.onrender.com/chat', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message })
     });
 
     const data = await res.json();
     loader.remove();
-    appendMessage(data.response, 'bot-message');
+    appendMessage(data.response || 'No response from bot.', 'bot-message');
   } catch (err) {
     loader.remove();
-    appendMessage('Error connecting to chatbot.', 'bot-message');
+    appendMessage('⚠️ Error connecting to chatbot.', 'bot-message');
+    console.error('Chatbot connection error:', err);
   }
 }
 
-input.addEventListener('keydown', function(e) {
+input.addEventListener('keydown', function (e) {
   if (e.key === 'Enter') sendMessage();
 });
